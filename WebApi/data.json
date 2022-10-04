@@ -13,5 +13,33 @@
       "UserName": "booo"
     }
   ],
-  "Todos": []
+  "Todos": [
+    {
+      "Id": 1,
+      "Owner": {
+        "Id": 3,
+        "UserName": "booo"
+      },
+      "Title": "make spagthetata",
+      "IsCompleted": false
+    },
+    {
+      "Id": 2,
+      "Owner": {
+        "Id": 2,
+        "UserName": "Alex molli"
+      },
+      "Title": "run from goose",
+      "IsCompleted": false
+    },
+    {
+      "Id": 3,
+      "Owner": {
+        "Id": 2,
+        "UserName": "Alex molli"
+      },
+      "Title": "spread word of gesus",
+      "IsCompleted": false
+    }
+  ]
 }
