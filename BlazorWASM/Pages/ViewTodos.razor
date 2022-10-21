@@ -1,0 +1,105 @@
+﻿@page "/ViewTodos"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject ITodoService todoService
+<h3>ViewTodos</h3>
+
+<div class="filter-bar">
+    <div class="filters-container">
+        <img src="icons/@(doShowFilters ? "clear_" : "")funnel.png" class="funnel" @onclick="@(() => doShowFilters = !doShowFilters)" alt="Funnel"/>
+        @if (doShowFilters)
+        {
+            <div class="filter">
+                <label>Username:</label>
+                <input type="text" @bind="userNameFilter"/>
+            </div>
+            <div class="filter">
+                <label>User id:</label>
+                <input type="number" @bind="userIdFilter"/>
+            </div>
+            <div class="filter">
+                <label>Is completed?</label>
+                <select @bind="completedStatusFilter">
+                    <option value="all">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label>Title contains:</label>
+                <input type="text" @bind="titleContainsFilter"/>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <button @onclick="LoadTodos"> Load </button>
+</div>
+
+@if (todos == null)
+{
+}
+else if (!todos.Any())
+{
+    <p>no Todos to diplay</p>
+}
+else
+{
+    <table class="table">
+        <thread>
+            <tr>
+                <th>todo</th>
+                <th>Owner</th>
+                <th>Title</th>
+                <th>Completed</th>
+            </tr>
+        </thread>
+        <tbody>
+        @foreach (var item in todos)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Owner.UserName</td>
+                <td>@item.Title</td>
+                <td>@item.IsCompleted</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@if (!String.IsNullOrEmpty(msg))
+{
+    <label style="color:darkred">@msg</label>
+}
+    @code {
+    private IEnumerable<Todo>? todos;
+    private String msg = "";
+        private bool doShowFilters = false;
+
+        private String? userNameFilter;
+        private int? userIdFilter;
+        private String? completedStatusFilter;
+        private String? titleContainsFilter;
+
+
+        private async Task LoadTodos()
+    {
+        try
+        {
+            bool? completedFilterValue = null;
+            if (!String.IsNullOrEmpty(completedStatusFilter)&&
+                completedStatusFilter.Equals("all"))
+            {
+                completedFilterValue = bool.Parse(completedStatusFilter);
+            }
+            todos = await todoService.GetAsync(userNameFilter, userIdFilter, completedFilterValue, titleContainsFilter);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+}

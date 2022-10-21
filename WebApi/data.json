@@ -42,7 +42,7 @@
         "UserName": "Alex molli"
       },
       "Title": "run from goose",
-      "IsCompleted": false
+      "IsCompleted": true
     },
     {
       "Id": 3,
@@ -51,6 +51,24 @@
         "UserName": "Alex molli"
       },
       "Title": "spread word of gesus",
+      "IsCompleted": true
+    },
+    {
+      "Id": 4,
+      "Owner": {
+        "Id": 3,
+        "UserName": "booo"
+      },
+      "Title": "spooke the nanny",
+      "IsCompleted": false
+    },
+    {
+      "Id": 5,
+      "Owner": {
+        "Id": 2,
+        "UserName": "Alex molli"
+      },
+      "Title": "say hello",
       "IsCompleted": false
     }
   ]
